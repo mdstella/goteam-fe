@@ -8,6 +8,7 @@ const style = {
     avatar: {
         marginRight: '10px',
         marginTop: '4px',
+        cursor: 'pointer',
     },
 };
 
