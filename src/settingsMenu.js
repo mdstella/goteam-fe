@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
+
 import { Divider, Menu, MenuItem } from 'material-ui';
+
 import ActionSettings from 'material-ui/svg-icons/action/settings';
 import ActionSettingsPower from 'material-ui/svg-icons/action/settings-power';
 
@@ -14,9 +17,9 @@ export default class SettingsMenu extends React.Component {
   render() {
     return (
       <Menu style={style.rightIcon}>
-        <MenuItem primaryText="Settings" leftIcon={<ActionSettings />} />
+        <MenuItem onClick={this.props.closePopover} primaryText="Settings" leftIcon={<ActionSettings />} containerElement={<Link to="/4" />} />
         <Divider />
-        <MenuItem primaryText="Sign out" leftIcon={<ActionSettingsPower />} />
+        <MenuItem onClick={this.props.closePopover} primaryText="Sign out" leftIcon={<ActionSettingsPower />} containerElement={<Link to="/5" />} />
       </Menu>
     );
   }

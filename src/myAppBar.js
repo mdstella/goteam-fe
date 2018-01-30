@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { AppBar, Drawer } from 'material-ui';
 
 import MainMenu from './mainMenu';
-import MyAvatar from './avatar';
+import MyToolBar from './myToolBar';
 
 
 export default class MyAppBar extends React.Component {
@@ -24,8 +25,7 @@ export default class MyAppBar extends React.Component {
             <div>
                 <AppBar title="GO-Team"
                     onLeftIconButtonClick={this.handleToggle}
-                    onRightIconButtonClick={this.handleToggle}
-                    iconElementRight={<MyAvatar />}
+                    iconElementRight={<MyToolBar />}
                 />
                 <Drawer
                     docked={false}
@@ -33,8 +33,7 @@ export default class MyAppBar extends React.Component {
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({ open })}
                 >
-                    {/* PASAR esto para el onclick: `onClick={this.handleClose}` */}
-                    <MainMenu />
+                    <MainMenu closeDrawer={this.handleClose} />
                 </Drawer>
             </div>
         );
