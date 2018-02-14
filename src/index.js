@@ -8,14 +8,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import MyAppBar from './myAppBar';
-import Body from './body';
+import MyAppBar from './myComponents/appBar/myAppBar';
+import MyRouter from './routing/myRouter';
 
 const App = () => (
   <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
     <div>
       <MyAppBar />
-      <Body />
+      <MyRouter />
     </div>
   </MuiThemeProvider>
 );

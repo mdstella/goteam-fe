@@ -1,15 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom'
 
-import HomeDashboard from './homeDashboard'
-import CommunityDashboard from './communityDashboard'
-import CommunityDetailDashboard from './communityDetailDashboard'
-import MatchDashboard from './matchDashboard'
-import MatchForm from './matchForm'
-import CommunityForm from './communityForm'
+import HomeDashboard from '../dashboards/homeDashboard'
+import CommunityDashboard from '../dashboards/communityDashboard'
+import CommunityDetailDashboard from '../dashboards/communityDetailDashboard'
+import MatchDashboard from '../dashboards/matchDashboard'
+import MatchForm from '../forms/matchForm'
+import CommunityForm from '../forms/communityForm'
 
 
-export default class Body extends React.Component {
+export default class MyRouter extends React.Component {
 
     render() {
         return (
@@ -21,6 +21,7 @@ export default class Body extends React.Component {
                     <Route path='/communities' component={CommunityDashboard} />
                     <Route path='/matches/new' component={MatchForm} />
                     <Route path='/matches' component={MatchDashboard} />
+                    {/* <Route path='/*' component={NotFound} /> */}
                 </Switch>
             </div>
         );

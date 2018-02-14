@@ -9,8 +9,11 @@ import {
 
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
-
 import SettingsMenu from './settingsMenu'
+
+import {
+    notificationsData,
+} from '../../mockData'
 
 
 const style = {
@@ -39,6 +42,7 @@ export default class MyToolBar extends React.Component {
 
         this.state = {
             open: false,
+            notifications: notificationsData,
         };
     }
 
@@ -62,14 +66,20 @@ export default class MyToolBar extends React.Component {
         return (
             <div>
                 <div style={style.badge}>
-                    <Badge
-                        badgeContent={10}
-                        secondary={true}
-                        style={{ padding: 0 }}>
+                    {this.state.notifications.length > 0 ?
+                        <Badge
+                            badgeContent={this.state.notifications.length}
+                            secondary={true}
+                            style={{ padding: 0 }}>
+                            <IconButton>
+                                <NotificationsIcon />
+                            </IconButton>
+                        </Badge>
+                        :
                         <IconButton>
                             <NotificationsIcon />
                         </IconButton>
-                    </Badge>
+                    }
                 </div>
                 <div style={style.avatar} onClick={this.handleClick}>
                     {/* <Avatar src={process.env.PUBLIC_URL + '/favicon.ico'} /> */}

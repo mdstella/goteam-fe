@@ -8,6 +8,10 @@ import {
     TextField
 } from 'material-ui';
 
+import {
+    myCommunitiesData,
+} from '../mockData'
+
 const styles = {
     propContainer: {
         width: 900,
@@ -18,13 +22,47 @@ const styles = {
 
 export default class MatchForm extends Component {
 
-    state = {
-        value: 1,
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 1,
+            input: '',
+        };
+
+    }
+
+    saveCommunity() {
+        myCommunitiesData.push({
+            name: this.state.input,
+            games: 0,
+            won: 0,
+            lost: 0,
+            tied: 0,
+            // we need the last ranking here
+            ranking: 100,
+            status: '-',
+        })
     };
 
-    handleChange = (event, index, value) => this.setState({ value });
+    handleSelectChange = (event, index, value) => this.setState({ value });
+
+    handleFieldChange = (event) => this.setState({ input: event.target.value });
 
     render() {
+        const that = this
+
+        const saveButton = function getSaveButton() {
+            return (<RaisedButton
+                label="Create"
+                primary={true}
+                style={{ marginTop: '12px' }}
+                containerElement={<Link to={`/communities`} />}
+                onClick={() => that.saveCommunity()}
+            />
+            );
+        }
+
+
         return (
             <div>
                 <div style={styles.propContainer}>
@@ -38,6 +76,8 @@ export default class MatchForm extends Component {
                         <TextField
                             hintText="Community name"
                             floatingLabelText="Community name"
+                            name="communityField"
+                            onChange={this.handleFieldChange}
                         />
                     </div>
 
@@ -45,7 +85,7 @@ export default class MatchForm extends Component {
                         <SelectField
                             floatingLabelText="Default sport"
                             value={this.state.value}
-                            onChange={this.handleChange}
+                            onChange={this.handleSelectChange}
                             autoWidth={true}
                         >
                             <MenuItem value={1} primaryText="Futbol" />
@@ -56,7 +96,7 @@ export default class MatchForm extends Component {
                         </SelectField>
                     </div>
 
-                    <RaisedButton containerElement={<Link to={`/communities`} />} label="Create" primary={true} style={{ marginTop: '12px' }} />
+                    {saveButton()}
                 </div>
             </div>
         );
