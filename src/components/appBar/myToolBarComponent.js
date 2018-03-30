@@ -9,7 +9,7 @@ import {
 
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
-import SettingsMenu from './settingsMenu'
+import SettingsMenuComponent from './settingsMenuComponent'
 
 import {
     notificationsData,
@@ -35,7 +35,7 @@ const style = {
     },
 };
 
-export default class MyToolBar extends React.Component {
+export default class MyToolBarComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -90,7 +90,7 @@ export default class MyToolBar extends React.Component {
                         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                         targetOrigin={{ horizontal: 'left', vertical: 'top' }}
                         onRequestClose={this.handleRequestClose}>
-                        <SettingsMenu closePopover={this.handleRequestClose} />
+                        <SettingsMenuComponent closePopover={this.handleRequestClose} />
                     </Popover>
                 </div>
             </div>

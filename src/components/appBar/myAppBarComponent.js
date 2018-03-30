@@ -2,11 +2,11 @@ import React from 'react';
 
 import { AppBar, Drawer } from 'material-ui';
 
-import MainMenu from './mainMenu';
-import MyToolBar from './myToolBar';
+import MainMenuComponent from './mainMenuComponent';
+import MyToolBarComponent from './myToolBarComponent';
 
 
-export default class MyAppBar extends React.Component {
+export default class MyAppBarComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ export default class MyAppBar extends React.Component {
             <div>
                 <AppBar title="GO-Team"
                     onLeftIconButtonClick={this.handleToggle}
-                    iconElementRight={<MyToolBar />}
+                    iconElementRight={<MyToolBarComponent />}
                 />
                 <Drawer
                     docked={false}
@@ -33,7 +33,7 @@ export default class MyAppBar extends React.Component {
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({ open })}
                 >
-                    <MainMenu closeDrawer={this.handleClose} />
+                    <MainMenuComponent closeDrawer={this.handleClose} />
                 </Drawer>
             </div>
         );

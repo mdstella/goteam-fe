@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 
 import {
     MenuItem,
@@ -7,10 +8,6 @@ import {
     SelectField,
     TextField
 } from 'material-ui';
-
-import {
-    myCommunitiesData,
-} from '../mockData'
 
 const styles = {
     propContainer: {
@@ -20,7 +17,7 @@ const styles = {
     },
 };
 
-export default class MatchForm extends Component {
+export default class CommunityFormComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -31,8 +28,8 @@ export default class MatchForm extends Component {
 
     }
 
-    saveCommunity() {
-        myCommunitiesData.push({
+    getCommunity() {
+        return {
             name: this.state.input,
             games: 0,
             won: 0,
@@ -41,7 +38,7 @@ export default class MatchForm extends Component {
             // we need the last ranking here
             ranking: 100,
             status: '-',
-        })
+        }
     };
 
     handleSelectChange = (event, index, value) => this.setState({ value });
@@ -57,7 +54,7 @@ export default class MatchForm extends Component {
                 primary={true}
                 style={{ marginTop: '12px' }}
                 containerElement={<Link to={`/communities`} />}
-                onClick={() => that.saveCommunity()}
+                onClick={() => that.props.dispatch(that.getCommunity())}
             />
             );
         }
@@ -101,4 +98,8 @@ export default class MatchForm extends Component {
             </div>
         );
     }
+}
+
+CommunityFormComponent.propTypes = {
+    dispatch: PropTypes.func.isRequired
 }

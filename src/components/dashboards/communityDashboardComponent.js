@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 
 import {
     RaisedButton,
@@ -8,13 +9,8 @@ import {
 
 import ContentAdd from 'material-ui/svg-icons/content/add'
 
-import MyTable from '../myComponents/myTable';
-import MyDivider from '../myComponents/myDivider';
-
-import {
-    searchData,
-    myCommunitiesData,
-} from '../mockData'
+import MyTableComponent from '../myTableComponent';
+import MyDividerComponent from '../myDividerComponent';
 
 const styles = {
     propContainer: {
@@ -24,50 +20,28 @@ const styles = {
     },
 };
 
-export default class CommunityDashboard extends Component {
+export default class CommunityDashboardComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myCommunities: myCommunitiesData,
-            searchResult: [],
+            myCommunities: this.props.myCommunities === undefined ? [] : this.props.myCommunities,
+            searchResult: this.props.searchResult === undefined ? [] : this.props.searchResult,
+            searchInput: '',
         };
+
     }
 
-    leaveCommunity(rowIndex) {
-        let aux = this.state.myCommunities
-        aux.splice(rowIndex, 1)
-
-        this.setState({
-            myCommunities: aux
-        });
-    }
-
-    requestAccessNotification(rowIndex) {
-        let aux = this.state.searchResult
-        aux.splice(rowIndex, 1)
-
-        this.setState({
-            searchResult: aux
-        });
-    }
-
-    leaveNotification(rowIndex) {
-        let aux = this.state.searchResult
-        aux.splice(rowIndex, 1)
-
-        this.setState({
-            searchResult: aux
-        });
-    }
-
-    searchCommunities() {
-        this.setState({
-            searchResult: searchData,
-        })
-    }
+    handleSearchFieldChange = (event) => this.setState({ searchInput: event.target.value });
 
     render() {
         const that = this
+
+        function loadCommunityDetail(index, name) {
+            // TODO send the community id once is integrated with saga
+            that.props.communityNextMatches(name)
+            that.props.communityMembers(index)
+            that.props.communityMembersRequest(index)
+        }
 
         const detailButton = function getDetailButton(row, rowIndex) {
             return (<RaisedButton
@@ -75,6 +49,7 @@ export default class CommunityDashboard extends Component {
                 labelColor="#ffffff"
                 backgroundColor="Blue"
                 containerElement={< Link to={`/communities/${row.name}`} />}
+                onClick={() => loadCommunityDetail(rowIndex, row.name)}
             />
             );
         }
@@ -84,7 +59,8 @@ export default class CommunityDashboard extends Component {
                 label="Leave"
                 labelColor="#ffffff"
                 backgroundColor="Red"
-                onClick={() => that.leaveCommunity(rowIndex)}
+                //  TODO change row index by community id
+                onClick={() => that.props.leaveCommunity(rowIndex)}
             />
             );
         }
@@ -96,13 +72,14 @@ export default class CommunityDashboard extends Component {
         }
 
         const myConditionalButtons = function getConditionalButtons(row, rowIndex) {
-            if (row.isMember === 'true') {
+            if (row.isMember) {
                 return (
                     <RaisedButton
                         label="Leave"
                         labelColor="#ffffff"
                         backgroundColor="Red"
-                        onClick={() => that.leaveNotification(rowIndex)}
+                        //  TODO change row index by community id
+                        onClick={() => that.props.leaveNotification(rowIndex)}
                     />
                 );
             }
@@ -111,7 +88,8 @@ export default class CommunityDashboard extends Component {
                     label="Request access"
                     labelColor="#ffffff"
                     backgroundColor="Green"
-                    onClick={() => that.requestAccessNotification(rowIndex)}
+                    //  TODO change row index by community id
+                    onClick={() => that.props.requestAccessNotification(rowIndex)}
                 />
             );
         }
@@ -123,36 +101,36 @@ export default class CommunityDashboard extends Component {
                     <TextField
                         hintText="Search community"
                         floatingLabelText="Search community"
+                        onChange={this.handleSearchFieldChange}
                     />
                     <RaisedButton
                         label="Search"
                         primary={true}
                         style={{ margin: '12px' }}
-                        onClick={() => this.searchCommunities()}
+                        onClick={() => this.props.searchCommunities(this.state.searchInput)}
                     />
-
                 </div>
 
 
 
-                {this.state.searchResult.length > 0 &&
+                {this.props.searchResult.length > 0 &&
                     <div>
 
-                        <MyTable
+                        <MyTableComponent
                             tableName="SEARCH RESULT"
-                            columnsNames={["Name", "Players", "Default Sport", "Member", "Actions"]}
-                            rowsContent={this.state.searchResult}
+                            columnsNames={["Name", "Players", "Default Sport", "Member", ""]}
+                            rowsContent={this.props.searchResult}
                             conditionalRowButtons={myConditionalButtons}
-                        />
+                            myCommunities />
 
-                        <MyDivider />
+                        <MyDividerComponent />
                     </div>
                 }
 
-                <MyTable
+                <MyTableComponent
                     tableName="MY COMMUNITIES"
-                    columnsNames={["Name", "Games played", "Won", "Lost", "Tied", "Ranking", "Status", "Actions", "Actions"]}
-                    rowsContent={this.state.myCommunities}
+                    columnsNames={["Name", "Games played", "Won", "Lost", "Tied", "Ranking", "Status", "", ""]}
+                    rowsContent={this.props.myCommunities}
                     rowButtons={myCommunitiesButtonsMap}
                     floatingButton={<ContentAdd />}
                     floatingButtonLink={<Link to={`/communities/new`} />}
@@ -161,4 +139,25 @@ export default class CommunityDashboard extends Component {
             </div>
         );
     }
+}
+
+CommunityDashboardComponent.propTypes = {
+    myCommunities: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            won: PropTypes.number,
+            lost: PropTypes.number,
+            tied: PropTypes.number,
+            ranking: PropTypes.number,
+            status: PropTypes.string
+        })
+    ),
+    searchResult: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            players: PropTypes.number,
+            sport: PropTypes.string,
+            isMember: PropTypes.bool
+        })
+    )
 }

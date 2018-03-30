@@ -11,15 +11,6 @@ import {
     TableRowColumn,
 } from 'material-ui';
 
-
-const styles = {
-    propContainer: {
-        width: 900,
-        overflow: 'hidden',
-        margin: '20px auto 0',
-    },
-};
-
 function getTableHeight(rowsCount) {
     if (rowsCount === 0) {
         return '10px'
@@ -32,7 +23,15 @@ function getTableHeight(rowsCount) {
     }
 }
 
-export default class MyTable extends Component {
+function getStyle(width) {
+    return {
+        width: width === undefined ? 900 : width,
+        overflow: 'hidden',
+        margin: '20px auto 0',
+    }
+}
+
+export default class MyTableComponent extends Component {
     state = {
         fixedHeader: true,
         stripedRows: true,
@@ -40,7 +39,6 @@ export default class MyTable extends Component {
         showCheckboxes: false,
         selectable: false,
     };
-
 
     render() {
 
@@ -54,7 +52,7 @@ export default class MyTable extends Component {
         }
 
         return (
-            <div style={styles.propContainer} >
+            <div style={getStyle(this.props.width)} >
                 <Table
                     height={getTableHeight(this.props.rowsContent.length)}
                     fixedHeader={this.state.fixedHeadershowCheckboxes}
@@ -115,10 +113,10 @@ export default class MyTable extends Component {
     }
 }
 
-MyTable.defaultProps = {
+MyTableComponent.defaultProps = {
     height: '200px',
 };
 
-MyTable.propTypes = {
+MyTableComponent.propTypes = {
     height: PropTypes.string
 }

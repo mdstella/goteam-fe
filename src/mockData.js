@@ -3,19 +3,19 @@ export let searchData = [
         name: 'Los Tragale',
         players: 34,
         sport: 'Futbol',
-        isMember: 'false',
+        isMember: false,
     },
     {
         name: 'Carne por popa',
         players: 10,
         sport: 'Basquet',
-        isMember: 'false',
+        isMember: false,
     },
     {
         name: 'GLB',
         players: 10,
         sport: 'Futbol',
-        isMember: 'true',
+        isMember: true,
     },
 ];
 
@@ -67,6 +67,39 @@ export let membersData = [
         tied: 40,
         ranking: 2,
         status: '+2',
+    },
+];
+
+export let matchPlayers = [
+    {
+        name: 'Maenza',
+    },
+    {
+        name: '8Teco',
+    },
+    {
+        name: 'Gabio',
+    },
+    {
+        name: 'JP',
+    },
+    {
+        name: 'Marco',
+    },
+    {
+        name: 'Franco',
+    },
+    {
+        name: 'Pino',
+    },
+    {
+        name: 'Edu',
+    },
+    {
+        name: 'Migue',
+    },
+    {
+        name: 'Pablo',
     },
 ];
 

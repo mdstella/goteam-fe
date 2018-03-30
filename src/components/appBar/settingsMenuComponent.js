@@ -13,13 +13,13 @@ const style = {
   },
 };
 
-export default class SettingsMenu extends React.Component {
+export default class SettingsMenuComponent extends React.Component {
   render() {
     return (
       <Menu style={style.rightIcon}>
         <MenuItem onClick={this.props.closePopover} primaryText="Settings" leftIcon={<ActionSettings />} containerElement={<Link to="/4" />} />
         <Divider />
-        <MenuItem onClick={this.props.closePopover} primaryText="Sign out" leftIcon={<ActionSettingsPower />} containerElement={<Link to="/5" />} />
+        <MenuItem onClick={this.props.closePopover} primaryText="Sign out" leftIcon={<ActionSettingsPower />} containerElement={<Link to="/" />} />
       </Menu>
     );
   }

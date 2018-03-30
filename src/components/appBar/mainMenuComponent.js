@@ -14,13 +14,13 @@ const style = {
   },
 };
 
-export default class MainMenu extends React.Component {
+export default class MainMenuComponent extends React.Component {
   render() {
     return (
       <Menu style={style.rightIcon}>
-        <MenuItem onClick={this.props.closeDrawer} primaryText="Home" leftIcon={<ActionHome />} containerElement={<Link to="/" />}/>
+        <MenuItem onClick={this.props.closeDrawer} primaryText="Home" leftIcon={<ActionHome />} containerElement={<Link to="/home" />} />
         <MenuItem onClick={this.props.closeDrawer} primaryText="Community" containerElement={<Link to="/communities" />} leftIcon={<SocialGroup />} />
-        <MenuItem onClick={this.props.closeDrawer} primaryText="Matches" leftIcon={<MapsDirectionsRun />} containerElement={<Link to="/matches" />}/>
+        <MenuItem onClick={this.props.closeDrawer} primaryText="Matches" leftIcon={<MapsDirectionsRun />} containerElement={<Link to="/matches" />} />
       </Menu>
     );
   }

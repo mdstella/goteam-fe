@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import {
     Checkbox,
@@ -9,10 +10,6 @@ import {
     SelectField,
     TextField
 } from 'material-ui';
-
-import {
-    matchesData,
-} from '../mockData'
 
 const styles = {
     propContainer: {
@@ -26,7 +23,7 @@ const styles = {
     },
 };
 
-export default class MatchForm extends Component {
+export default class MatchFormComponent extends Component {
     constructor() {
         super();
         this.state = {
@@ -68,14 +65,14 @@ export default class MatchForm extends Component {
     }
 
     createMatch() {
-        matchesData.push({
+        return {
             date: this.state.when,
             location: this.state.where,
             sport: this.state.sportValue,
             community: this.state.communityValue,
             team: 'TBD',
             status: 'Pending',
-        })
+        }
     };
 
     render() {
@@ -88,7 +85,7 @@ export default class MatchForm extends Component {
                     label="Create"
                     primary={true}
                     style={{ marginTop: '12px' }}
-                    onClick={() => that.createMatch()}
+                    onClick={() => that.props.dispatch(that.createMatch())}
                 />
             );
         }
@@ -212,4 +209,8 @@ export default class MatchForm extends Component {
             </div>
         );
     }
+}
+
+MatchFormComponent.propTypes = {
+    dispatch: PropTypes.func.isRequired
 }
